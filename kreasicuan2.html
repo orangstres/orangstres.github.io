@@ -766,10 +766,6 @@
     ></script>
   </head>
   <body>
-    <amp-analytics
-      config="https://www.googletagmanager.com/amp.json?id=G-9KWT0040E6"
-      data-credentials="include"
-    ></amp-analytics>
     <header>
       <div class="header-wrapper">
         <div class="logo">
@@ -1156,5 +1152,23 @@
         </a>
       </div>
     </div>
+    <amp-analytics type="googleanalytics">
+      <script type="application/json">
+        {
+          "vars": {
+            "account": "G-9KWT0040E6"
+          },
+          "triggers": {
+            "default pageview": {
+              "on": "visible",
+              "request": "pageview",
+              "vars": {
+                "title": "Name of the Article"
+              }
+            }
+          }
+        }
+      </script>
+    </amp-analytics>
   </body>
 </html>
