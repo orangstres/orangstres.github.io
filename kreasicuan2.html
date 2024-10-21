@@ -758,8 +758,27 @@
         "description": "Jelajahi cara 'Wild Banditto' memberikan inspirasi dan peluang baru untuk mencapai impian kita."
       }
     </script>
+    <!-- Load amp-analytics -->
+    <script
+      async
+      custom-element="amp-analytics"
+      src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"
+    ></script>
   </head>
   <body>
+    <!-- Configure analytics to use gtag -->
+    <amp-analytics type="gtag" data-credentials="include">
+      <script type="application/json">
+        {
+          "vars": {
+            "gtag_id": "G-9KWT0040E6",
+            "config": {
+              "G-9KWT0040E6": {}
+            }
+          }
+        }
+      </script>
+    </amp-analytics>
     <header>
       <div class="header-wrapper">
         <div class="logo">
