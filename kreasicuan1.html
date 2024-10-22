@@ -1169,24 +1169,14 @@
           </ul>
         </div>
       </article>
-      <amp-web-push-widget
-        visibility="unsubscribed"
-        layout="fixed"
-        width="250"
-        height="80"
-      >
+      <amp-web-push-widget width="250" height="80">
         <button on="tap:amp-web-push.subscribe" style="color: white">
           Subscribe to Notifications
         </button>
       </amp-web-push-widget>
 
       <!-- An unsubscription widget -->
-      <amp-web-push-widget
-        visibility="subscribed"
-        layout="fixed"
-        width="250"
-        height="80"
-      >
+      <amp-web-push-widget width="250" height="80">
         <button on="tap:amp-web-push.unsubscribe" style="color: white">
           Unsubscribe from Notifications
         </button>
