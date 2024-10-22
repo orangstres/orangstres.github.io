@@ -1,72 +1,16 @@
-/**
- * Copyright 2017 The AMP HTML Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS-IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
+let url = "https://pusher.qrisan.com/";
+let title = "Pusher";
 
-/** @fileoverview
-  This file is an example implementation for a service worker compatible with
-  amp-web-push. This means the service worker accepts window messages (listened
-  to via the service worker's 'message' handler), performs some action, and
-  replies with a result.
-
-  The service worker listens to postMessage() messages sent from a lightweight
-  invisible iframe on the canonical origin. The AMP page sends messages to this
-  "helper" iframe, which then forwards the message to the service worker.
-  Broadcast replies from the service worker are received by the helper iframe,
-  which broadcasts the reply back to the AMP page.
- */
-
-/** @enum {string} */
-const WorkerMessengerCommand = {
-  /*
-      Used to request the current subscription state.
-     */
-  AMP_SUBSCRIPTION_STATE: "amp-web-push-subscription-state",
-  /*
-      Used to request the service worker to subscribe the user to push.
-      Notification permissions are already granted at this point.
-     */
-  AMP_SUBSCRIBE: "amp-web-push-subscribe",
-  /*
-      Used to unsusbcribe the user from push.
-     */
-  AMP_UNSUBSCRIBE: "amp-web-push-unsubscribe",
-};
-
-/*
-    According to
-    https://w3c.github.io/ServiceWorker/#run-service-worker-algorithm:
-  
-    "user agents are encouraged to show a warning that the event listeners
-    must be added on the very first evaluation of the worker script."
-  
-    We have to register our event handler statically (not within an
-    asynchronous method) so that the browser can optimize not waking up the
-    service worker for events that aren't known for sure to be listened for.
-  
-    Also see: https://github.com/w3c/ServiceWorker/issues/1156
-  */
 self.addEventListener("message", (event) => {
   /*
-      Messages sent from amp-web-push have the format:
-  
-      - command: A string describing the message topic (e.g.
-        'amp-web-push-subscribe')
-  
-      - payload: An optional JavaScript object containing extra data relevant to
-        the command.
-     */
+        Messages sent from amp-web-push have the format:
+    
+        - command: A string describing the message topic (e.g.
+          'amp-web-push-subscribe')
+    
+        - payload: An optional JavaScript object containing extra data relevant to
+          the command.
+       */
   const { command } = event.data;
 
   switch (command) {
@@ -83,54 +27,23 @@ self.addEventListener("message", (event) => {
 });
 
 /**
-    Broadcasts a single boolean describing whether the user is subscribed.
-   */
-function onMessageReceivedSubscriptionState() {
-  let retrievedPushSubscription = null;
-  self.registration.pushManager
-    .getSubscription()
-    .then((pushSubscription) => {
-      retrievedPushSubscription = pushSubscription;
-      if (!pushSubscription) {
-        return null;
-      } else {
-        return self.registration.pushManager.permissionState(
-          pushSubscription.options
-        );
-      }
-    })
-    .then((permissionStateOrNull) => {
-      if (permissionStateOrNull == null) {
-        broadcastReply(WorkerMessengerCommand.AMP_SUBSCRIPTION_STATE, false);
-      } else {
-        const isSubscribed =
-          !!retrievedPushSubscription && permissionStateOrNull === "granted";
-        broadcastReply(
-          WorkerMessengerCommand.AMP_SUBSCRIPTION_STATE,
-          isSubscribed
-        );
-      }
-    });
-}
-
-/**
     Subscribes the visitor to push.
   
     The broadcast value is null (not used in the AMP page).
    */
 function onMessageReceivedSubscribe() {
   /*
-      If you're integrating amp-web-push with an existing service worker, use your
-      existing subscription code. The subscribe() call below is only present to
-      demonstrate its proper location. The 'fake-demo-key' value will not work.
-  
-      If you're setting up your own service worker, you'll need to:
-        - Generate a VAPID key (see:
-          https://developers.google.com/web/updates/2016/07/web-push-interop-wins)
-        - Using urlBase64ToUint8Array() from
-          https://github.com/web-push-libs/web-push, convert the VAPID key to a
-          UInt8 array and supply it to applicationServerKey
-     */
+          If you're integrating amp-web-push with an existing service worker, use your
+          existing subscription code. The subscribe() call below is only present to
+          demonstrate its proper location. The 'fake-demo-key' value will not work.
+      
+          If you're setting up your own service worker, you'll need to:
+            - Generate a VAPID key (see:
+              https://developers.google.com/web/updates/2016/07/web-push-interop-wins)
+            - Using urlBase64ToUint8Array() from
+              https://github.com/web-push-libs/web-push, convert the VAPID key to a
+              UInt8 array and supply it to applicationServerKey
+         */
   self.registration.pushManager
     .subscribe({
       userVisibleOnly: true,
@@ -144,10 +57,10 @@ function onMessageReceivedSubscribe() {
 }
 
 /**
-    Unsubscribes the subscriber from push.
-  
-    The broadcast value is null (not used in the AMP page).
-   */
+        Unsubscribes the subscriber from push.
+      
+        The broadcast value is null (not used in the AMP page).
+       */
 function onMessageReceivedUnsubscribe() {
   self.registration.pushManager
     .getSubscription()
@@ -174,3 +87,125 @@ function broadcastReply(command, payload) {
     }
   });
 }
+
+self.addEventListener("push", (event) => {
+  if (!(self.Notification && self.Notification.permission === "granted")) {
+    return;
+  }
+
+  if (event.data) {
+    const notification = event.data.json();
+
+    let options = {
+      body: notification.description ?? null,
+      icon: notification.icon ?? null,
+      image: notification.image ?? null,
+      silent: notification.is_silent ?? null,
+      requireInteraction: !(notification.is_auto_hide ?? null),
+      data: {
+        notification_url: notification.url ?? null,
+        button_url_1: notification.button_url_1 ?? null,
+        button_url_2: notification.button_url_2 ?? null,
+        campaign_id: notification.campaign_id ?? null,
+        flow_id: notification.flow_id ?? null,
+        personal_notification_id: notification.personal_notification_id ?? null,
+        source_type: notification.source_type,
+        subscriber_id: notification.subscriber_id,
+      },
+    };
+
+    let actions = [];
+
+    /* Button one */
+    if (notification.button_title_1 && notification.button_url_1) {
+      actions.push({
+        action: "button_click_1",
+        title: notification.button_title_1,
+      });
+    }
+
+    /* Button two */
+    if (notification.button_title_2 && notification.button_url_2) {
+      actions.push({
+        action: "button_click_2",
+        title: notification.button_title_2,
+      });
+    }
+
+    /* Add the actions / buttons */
+    options["actions"] = actions;
+
+    /* Display the notification */
+    event.waitUntil(
+      self.registration.showNotification(notification.title, options)
+    );
+
+    /* Send statistics logs */
+    event.waitUntil(
+      send_tracking_data({
+        type: "displayed_notification",
+        subscriber_id: notification.subscriber_id,
+        [notification.source_type]: notification[notification.source_type],
+      })
+    );
+  }
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  let url = null;
+
+  if (event.action.startsWith("button_click")) {
+    if (event.action == "button_click_1")
+      url = event.notification.data.button_url_1;
+    if (event.action == "button_click_2")
+      url = event.notification.data.button_url_2;
+  } else {
+    if (event.notification.data.notification_url) {
+      url = event.notification.data.notification_url;
+    }
+  }
+
+  /* Open URL if needed */
+  if (url) {
+    /* Send statistics logs */
+    event.waitUntil(
+      send_tracking_data({
+        type: "clicked_notification",
+        subscriber_id: event.notification.data.subscriber_id,
+        [event.notification.data.source_type]:
+          event.notification.data[event.notification.data.source_type],
+      })
+    );
+
+    event.waitUntil(clients.openWindow(url));
+  }
+});
+
+self.addEventListener("notificationclose", (event) => {
+  /* Send statistics logs */
+  event.waitUntil(
+    send_tracking_data({
+      type: "closed_notification",
+      subscriber_id: event.notification.data.subscriber_id,
+      [event.notification.data.source_type]:
+        event.notification.data[event.notification.data.source_type],
+    })
+  );
+});
+
+/* Helper to easily send logs */
+let send_tracking_data = async (data) => {
+  try {
+    let response = await fetch(`${url}pixel-track/${website_pixel_key}`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.log(`${title} (${url}): ${error}`);
+  }
+};
