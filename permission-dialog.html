@@ -9,6 +9,11 @@
       defer
       src="https://pusher.qrisan.com/pixel/RYZYsgLgWyZK608Q"
     ></script>
+    <script>
+      window.addEventListener("pusher.subscribed", function (e) {
+        window.close();
+      });
+    </script>
   </head>
   <body></body>
 </html>
