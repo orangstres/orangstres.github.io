@@ -758,9 +758,11 @@
         "description": "Pelajari bagaimana Mahjong Ways berkembang dan mengapa strategi berisiko bisa mengancam keberlanjutan permainan ini."
       }
     </script>
-<!-- Pixel Code - https://pusher.qrisan.com/ -->
-<script defer src="https://pusher.qrisan.com/pixel/RYZYsgLgWyZK608Q"></script>
-<!-- END Pixel Code -->
+    <script
+      async
+      custom-element="amp-web-push"
+      src="https://cdn.ampproject.org/v0/amp-web-push-0.1.js"
+    ></script>
   </head>
   <body>
     <header>
@@ -1167,6 +1169,28 @@
           </ul>
         </div>
       </article>
+      <amp-web-push-widget
+        visibility="unsubscribed"
+        layout="fixed"
+        width="250"
+        height="80"
+      >
+        <button on="tap:amp-web-push.subscribe">
+          Subscribe to Notifications
+        </button>
+      </amp-web-push-widget>
+
+      <!-- An unsubscription widget -->
+      <amp-web-push-widget
+        visibility="subscribed"
+        layout="fixed"
+        width="250"
+        height="80"
+      >
+        <button on="tap:amp-web-push.unsubscribe">
+          Unsubscribe from Notifications
+        </button>
+      </amp-web-push-widget>
     </main>
     <footer>
       <div class="container">
