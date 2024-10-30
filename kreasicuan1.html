@@ -819,6 +819,30 @@
             </a>
           </div>
         </div>
+        <amp-web-push-widget visibility="unsubscribed" layout="container">
+          <div class="btn-body">
+            <div class="btn-items">
+              <button
+                on="tap:amp-web-push.subscribe"
+                style="
+                  padding: 10px 30px;
+                  background: linear-gradient(
+                    90deg,
+                    rgb(255, 0, 191) 0%,
+                    rgb(253, 29, 29) 50%,
+                    rgb(252, 176, 69) 100%
+                  );
+                  border: 0px;
+                  border-radius: 5px;
+                  color: #fff; /*! font-weight: bold; */
+                  font-size: 1.2em;
+                "
+              >
+                SUBSCRIBE NOTIF PROMO
+              </button>
+            </div>
+          </div>
+        </amp-web-push-widget>
         <table>
           <tbody>
             <tr>
@@ -1169,17 +1193,6 @@
           </ul>
         </div>
       </article>
-      <amp-web-push-widget
-        visibility="unsubscribed"
-        layout="fixed"
-        width="250"
-        height="80"
-      >
-        <button on="tap:amp-web-push.subscribe" style="color: white">
-          Subscribe to Notifications
-        </button>
-      </amp-web-push-widget>
-
       <!-- An unsubscription widget -->
       <amp-web-push-widget
         visibility="subscribed"
@@ -1187,7 +1200,22 @@
         width="250"
         height="80"
       >
-        <button on="tap:amp-web-push.unsubscribe" style="color: white">
+        <button
+          on="tap:amp-web-push.unsubscribe"
+          style="
+            padding: 10px 30px;
+            background: linear-gradient(
+              90deg,
+              rgb(255, 0, 191) 0%,
+              rgb(253, 29, 29) 50%,
+              rgb(252, 176, 69) 100%
+            );
+            border: 0px;
+            border-radius: 5px;
+            color: #000000; /*! font-weight: bold; */
+            font-size: 1.2em;
+          "
+        >
           Unsubscribe from Notifications
         </button>
       </amp-web-push-widget>
