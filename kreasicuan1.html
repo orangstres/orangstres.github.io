@@ -836,6 +836,7 @@
                   border-radius: 5px;
                   color: #fff; /*! font-weight: bold; */
                   font-size: 1.2em;
+                  width: 100%;
                 "
               >
                 SUBSCRIBE NOTIF PROMO
@@ -1193,33 +1194,6 @@
           </ul>
         </div>
       </article>
-      <!-- An unsubscription widget -->
-      <amp-web-push-widget
-        visibility="subscribed"
-        layout="fixed"
-        width="250"
-        height="80"
-      >
-        <button
-          on="tap:amp-web-push.unsubscribe"
-          style="
-            padding: 10px 30px;
-            background: linear-gradient(
-              90deg,
-              rgb(255, 0, 191) 0%,
-              rgb(253, 29, 29) 50%,
-              rgb(252, 176, 69) 100%
-            );
-            border: 0px;
-            border-radius: 5px;
-            color: #000000;
-            font-size: 1.2em;
-            width: 100%;
-          "
-        >
-          Unsubscribe from Notifications
-        </button>
-      </amp-web-push-widget>
       <amp-web-push
         id="amp-web-push"
         layout="nodisplay"
