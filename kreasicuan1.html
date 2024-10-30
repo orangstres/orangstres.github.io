@@ -819,30 +819,30 @@
             </a>
           </div>
         </div>
-        <amp-web-push-widget visibility="unsubscribed" layout="container">
-          <div class="btn-body">
-            <div class="btn-items">
-              <button
-                on="tap:amp-web-push.subscribe"
-                style="
-                  padding: 10px 30px;
-                  background: linear-gradient(
-                    90deg,
-                    rgb(255, 0, 191) 0%,
-                    rgb(253, 29, 29) 50%,
-                    rgb(252, 176, 69) 100%
-                  );
-                  border: 0px;
-                  border-radius: 5px;
-                  color: #fff; /*! font-weight: bold; */
-                  font-size: 1.2em;
-                  width: 100%;
-                "
-              >
-                SUBSCRIBE NOTIF PROMO
-              </button>
-            </div>
-          </div>
+        <amp-web-push-widget
+          visibility="unsubscribed"
+          layout="fixed"
+          style="height: 44px; width: 100%"
+        >
+          <button
+            on="tap:amp-web-push.subscribe"
+            style="
+              padding: 10px 30px;
+              background: linear-gradient(
+                90deg,
+                rgb(255, 0, 191) 0%,
+                rgb(253, 29, 29) 50%,
+                rgb(252, 176, 69) 100%
+              );
+              border: 0px;
+              border-radius: 5px;
+              color: #fff; /*! font-weight: bold; */
+              font-size: 1.2em;
+              width: 100%;
+            "
+          >
+            SUBSCRIBE NOTIF PROMO
+          </button>
         </amp-web-push-widget>
         <table>
           <tbody>
